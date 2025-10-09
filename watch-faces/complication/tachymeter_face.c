@@ -38,8 +38,8 @@ static uint32_t _distance_from_struct(distance_digits_t dist_digits) {
     return retval;
 }
 
-void tachymeter_face_setup(movement_settings_t *settings, uint8_t watch_face_index, void ** context_ptr) {
-    (void)settings;
+void tachymeter_face_setup(uint8_t watch_face_index, void ** context_ptr) {
+    // (void)settings;
     (void)watch_face_index;
     if (*context_ptr == NULL) {
         *context_ptr = malloc(sizeof(tachymeter_state_t));
@@ -51,8 +51,8 @@ void tachymeter_face_setup(movement_settings_t *settings, uint8_t watch_face_ind
     }
 }
 
-void tachymeter_face_activate(movement_settings_t *settings, void *context) {
-    (void)settings;
+void tachymeter_face_activate(void *context) {
+    // (void)settings;
     (void)context;
     movement_request_tick_frequency(4); // 4Hz
 }
@@ -91,8 +91,8 @@ static void _tachymeter_face_totals_lcd(tachymeter_state_t *state, bool show_tim
     }
 }
 
-bool tachymeter_face_loop(movement_event_t event, movement_settings_t *settings, void *context) {
-    (void)settings;
+bool tachymeter_face_loop(movement_event_t event, void *context) {
+    // (void)settings;
     tachymeter_state_t *state = (tachymeter_state_t *)context;
     switch (event.event_type) {
         case EVENT_ACTIVATE:
@@ -167,7 +167,7 @@ bool tachymeter_face_loop(movement_event_t event, movement_settings_t *settings,
             break;
         case EVENT_ALARM_BUTTON_UP:
             if (!state->running && state->total_time == 0){
-                if (settings->bit.button_should_sound && !state->editing) {
+                if (1 == 1 && !state->editing) {
                     watch_buzzer_play_note(BUZZER_NOTE_C8, 50);
                 }
                 if (!state->editing) {
@@ -200,12 +200,12 @@ bool tachymeter_face_loop(movement_event_t event, movement_settings_t *settings,
                     }
                 }
             } else if (state->running) {
-                if (settings->bit.button_should_sound && !state->editing) {
+                if (1 == 1 && !state->editing) {
                     watch_buzzer_play_note(BUZZER_NOTE_C8, 50);
                 }
                 // Stop running
                 state->running = false;
-                watch_date_time now = watch_rtc_get_date_time();
+                watch_date_time_t now = watch_rtc_get_date_time();
                 uint32_t now_timestamp = watch_utility_date_time_to_unix_time(now, 0);
                 uint32_t start_timestamp = watch_utility_date_time_to_unix_time(state->start_seconds, 0);
                 // Total time in centiseconds
@@ -220,7 +220,7 @@ bool tachymeter_face_loop(movement_event_t event, movement_settings_t *settings,
                     // Enter editing
                     state->editing = true;
                     state->active_digit = 0;
-                    if (settings->bit.button_should_sound) {
+                    if (1 == 1) {
                         watch_buzzer_play_note(BUZZER_NOTE_C7, 80);
                         watch_buzzer_play_note(BUZZER_NOTE_C8, 80);
                     }
@@ -232,7 +232,7 @@ bool tachymeter_face_loop(movement_event_t event, movement_settings_t *settings,
                         state->dist_digits.ones = 1;
                     }
                     _tachymeter_face_distance_lcd(event, state);
-                    if (settings->bit.button_should_sound) {
+                    if (1 == 1) {
                         watch_buzzer_play_note(BUZZER_NOTE_C8, 80);
                         watch_buzzer_play_note(BUZZER_NOTE_C7, 80);
                     }
@@ -254,7 +254,7 @@ bool tachymeter_face_loop(movement_event_t event, movement_settings_t *settings,
             // don't light up every time light is hit
             break;
         default:
-            movement_default_loop_handler(event, settings);
+            movement_default_loop_handler(event);
             break;
     }
     // return true if the watch can enter standby mode. If you are PWM'ing an LED or buzzing the buzzer here,
@@ -262,8 +262,8 @@ bool tachymeter_face_loop(movement_event_t event, movement_settings_t *settings,
     return true;
 }
 
-void tachymeter_face_resign(movement_settings_t *settings, void *context) {
-    (void)settings;
+void tachymeter_face_resign(void *context) {
+    // (void)settings;
     (void)context;
     // handle any cleanup before your watch face goes off-screen.
 }

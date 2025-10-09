@@ -84,7 +84,7 @@ typedef struct {
     bool editing;                  // editing distance
     uint8_t active_digit;          // active digit at editing distance
     uint8_t animation_state;       // running animation state
-    watch_date_time start_seconds; // start_seconds
+    watch_date_time_t start_seconds; // start_seconds
     int8_t start_subsecond;        // start_subsecond count (each count = 250 ms)
     distance_digits_t dist_digits; // distance digitwise
     uint32_t distance;             // distance
@@ -92,10 +92,10 @@ typedef struct {
     uint32_t total_speed;          // 3600 * 100 * distance / total_time
 } tachymeter_state_t;
 
-void tachymeter_face_setup(movement_settings_t *settings, uint8_t watch_face_index, void ** context_ptr);
-void tachymeter_face_activate(movement_settings_t *settings, void *context);
-bool tachymeter_face_loop(movement_event_t event, movement_settings_t *settings, void *context);
-void tachymeter_face_resign(movement_settings_t *settings, void *context);
+void tachymeter_face_setup(uint8_t watch_face_index, void ** context_ptr);
+void tachymeter_face_activate(void *context);
+bool tachymeter_face_loop(movement_event_t event, void *context);
+void tachymeter_face_resign(void *context);
 
 #define tachymeter_face ((const watch_face_t){ \
     tachymeter_face_setup, \
