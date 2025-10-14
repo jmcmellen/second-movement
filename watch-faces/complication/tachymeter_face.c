@@ -167,7 +167,7 @@ bool tachymeter_face_loop(movement_event_t event, void *context) {
             break;
         case EVENT_ALARM_BUTTON_UP:
             if (!state->running && state->total_time == 0){
-                if (1 == 1 && !state->editing) {
+                if (movement_button_should_sound() && !state->editing) {
                     watch_buzzer_play_note(BUZZER_NOTE_C8, 50);
                 }
                 if (!state->editing) {
@@ -200,7 +200,7 @@ bool tachymeter_face_loop(movement_event_t event, void *context) {
                     }
                 }
             } else if (state->running) {
-                if (1 == 1 && !state->editing) {
+                if (movement_button_should_sound() && !state->editing) {
                     watch_buzzer_play_note(BUZZER_NOTE_C8, 50);
                 }
                 // Stop running
@@ -220,7 +220,7 @@ bool tachymeter_face_loop(movement_event_t event, void *context) {
                     // Enter editing
                     state->editing = true;
                     state->active_digit = 0;
-                    if (1 == 1) {
+                    if (movement_button_should_sound()) {
                         watch_buzzer_play_note(BUZZER_NOTE_C7, 80);
                         watch_buzzer_play_note(BUZZER_NOTE_C8, 80);
                     }
@@ -232,7 +232,7 @@ bool tachymeter_face_loop(movement_event_t event, void *context) {
                         state->dist_digits.ones = 1;
                     }
                     _tachymeter_face_distance_lcd(event, state);
-                    if (1 == 1) {
+                    if (movement_button_should_sound()) {
                         watch_buzzer_play_note(BUZZER_NOTE_C8, 80);
                         watch_buzzer_play_note(BUZZER_NOTE_C7, 80);
                     }
